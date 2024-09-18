@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Data Visualisation"/>
+    <meta name="keywords" content="HTML, CSS, D3"/>
+    <meta name="author" content="Adrian Chew"/>
+
+    <title>Task 2.1 D3 Data Binding</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+    <a href="Homepage.html" 
+    style="display: inline-block; 
+           margin-top: 20px; 
+           padding: 10px 15px; 
+           background-color: #007acc; 
+           color: white; 
+           text-decoration: none; 
+           border-radius: 5px;">Back</a>
+
+    <h1>The D3 Journey starts here...</h1>
+
+    <script>
+        var w = 900;
+        var h = 300;
+        var padding = 30;
+
+        var dataset = [
+            [5, 20],
+            [480, 90],
+            [250, 50],
+            [100, 33],
+            [330, 95],
+            [410, 12],
+            [475, 44],
+            [25, 67],
+            [85, 21],
+            [220, 88]
+        ];
+
+        var xScale = d3.scaleLinear()
+                        .domain([d3.min(dataset, function(d) { return d[0]; }),
+                                 d3.max(dataset, function(d) { return d[0]; })])
+                        .range([padding, w - padding]);
+
+        var yScale = d3.scaleLinear()
+                        .domain([d3.min(dataset, function(d) { return d[1]; }),
+                                 d3.max(dataset, function(d) { return d[1]; })])
+                        .range([h - padding, padding]);
+
+        var svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", w)
+                    .attr("height", h);
+        
+        var xAxis = d3.axisBottom()
+                      .ticks(5)
+                      .scale(xScale);
+
+        var yAxis = d3.axisLeft()
+                      .ticks(5)
+                      .scale(yScale);
+
+        svg.append("g")
+           .attr("transform", "translate(0," + (h - padding) + ")")
+           .call(xAxis);
+
+        svg.append("g")
+           .attr("transform", "translate(" + padding + ",0)")
+           .call(yAxis);
+
+        svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d) {
+                return xScale(d[0]);
+            })
+            .attr("cy", function(d) {
+                return yScale(d[1]);
+            })
+            .attr("r", 5)
+            .attr("fill", "black")
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                  .attr("fill", "red");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this)
+                  .attr("fill", "black");
+            });
+
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .text(function(d) {
+                return d[0] + "," + d[1];
+            })
+            .attr("x", function(d) {
+                return xScale(d[0]) + 5;
+            })
+            .attr("y", function(d) {
+                return yScale(d[1]) - 5;
+            })
+            .attr("font-size", "12px")
+            .attr("fill", "limegreen");
+    </script>
+
+    <br>
+    <footer>COS30045 Data Visualisation</footer>
+
+</body>
+</html>
