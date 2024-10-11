@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Data Visualisation" />
+    <meta name="keywords" content="HTML, CSS, D3" />
+    <meta name="author" content="Adrian Chew" />
+    <title>Task 2.1 D3 Data Binding</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<a href="Homepage.html" 
+style="display: inline-block; margin-top: 20px; padding: 10px 15px; 
+       background-color: #007acc; color: white; text-decoration: none; 
+       border-radius: 5px;">
+ Back
+</a>
+<h1>Stacked Bar Chart</h1>
+<body>
+    
+    <script>
+        var dataset = [
+            { apples: 5, oranges: 10, grapes: 22 },
+            { apples: 4, oranges: 12, grapes: 28 },
+            { apples: 2, oranges: 19, grapes: 32 },
+            { apples: 7, oranges: 23, grapes: 35 },
+            { apples: 23, oranges: 17, grapes: 43 }
+        ];
+
+        var categories = ["apples", "oranges", "grapes"];
+
+        dataset.forEach(function(d) {
+            d.total = d.apples + d.oranges + d.grapes;
+        });
+
+        dataset.sort(function(a, b) {
+            return b.total - a.total;
+        });
+
+        var series = d3.stack()
+            .keys(categories)
+            (dataset);
+
+        var w = 300;
+        var h = 300;
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        var xScale = d3.scaleBand()
+            .domain(d3.range(dataset.length))
+            .range([0, w])
+            .padding(0.1);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, d3.max(dataset, function(d) {
+                return d.apples + d.oranges + d.grapes;
+            })])
+            .range([h, 0]);
+
+        var color = d3.scaleOrdinal()
+            .domain(categories)
+            .range(d3.schemeCategory10);
+
+        var groups = svg.selectAll("g")
+            .data(series)
+            .enter()
+            .append("g")
+            .style("fill", function(d, i) { 
+                return color(i);
+            });
+
+        var rects = groups.selectAll("rect")
+            .data(function(d) { return d; })
+            .enter()
+            .append("rect")
+            .attr("x", function(d, i) { return xScale(i); })
+            .attr("y", function(d) { return yScale(d[1]); })
+            .attr("height", function(d) { return yScale(d[0]) - yScale(d[1]); })
+            .attr("width", xScale.bandwidth());
+
+    </script>
+
+<div style="margin-top: 20px;">
+    <h2>Lab 1 Exercise</h2>
+    <a href="Lab 1.1.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 1.1</a>
+    <a href="Lab 1.2.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 1.2</a>
+    <a href="Lab 1.3.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 1.3</a>
+</div>
+<div style="margin-top: 20px;">
+    <h2>Lab 2 Exercise</h2>
+    <a href="Lab 2.1.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 2.1</a>
+    <a href="Lab 2.2.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 2.2</a>
+    <a href="Lab 2.3.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 2.3</a>
+    <a href="Lab 2.4.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 2.4</a>
+</div>
+<div style="margin-top: 20px;">
+    <h2>Lab 3 Exercise</h2>
+    <a href="Lab 3.1.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 3.1</a>
+    <a href="Lab 3.2.1.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 3.2.1</a>
+</div>
+<div style="margin-top: 20px;">
+    <h2>Lab 5 Exercise</h2>
+    <a href="Lab 5.2.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 5.2</a>
+    <a href="Lab 5.3.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 5.3</a>
+</div>
+<div style="margin-top: 20px;">
+    <h2>Lab 6 Exercise</h2>
+    <a href="Lab 6.1.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 6.1</a>
+    <a href="Lab 6.2.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 6.2</a>
+</div>
+<div style="margin-top: 20px;">
+    <h2>Lab 7 Exercise</h2>
+    <a href="Lab 7.1.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 7.1</a>
+    <a href="Lab 7.2.html" style="display: inline-block; margin: 5px; padding: 10px 15px; background-color: cadetblue; color: white; text-decoration: none; border-radius: 5px;">Lab 7.2</a>
+</div>
+
+    <footer>COS30045 Data Visualisation</footer>
+</body>
+</html>
