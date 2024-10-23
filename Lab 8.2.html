@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Data Visualisation Exercise 1"/>
+    <meta name="keywords" content="HTML, CSS, D3.js"/>
+    <meta name="author" content="Adrian Chew"/>
+    <title>Victoria's LGA Unemployment Map</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="Lab 8.2.js" defer></script>
+
+    <style>
+        .view-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .view-btn:hover {
+            background-color: #45a049;
+        }
+
+        svg {
+            border: 1px solid #3b3b38;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #tooltip {
+            position: absolute;
+            opacity: 0;
+            background-color: white;
+            padding: 5px;
+            border-radius: 3px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Victoria's Local Government Areas (LGA) Unemployment Map</h1>
+
+    <div id="map-container"></div>
+    <div id="tooltip"></div>
+
+    <footer>COS30045 Data Visualisation</footer>
+
+</body>
+</html>
